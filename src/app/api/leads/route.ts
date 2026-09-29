@@ -1,4 +1,4 @@
-import { db } from "@/db";
+import { getDb, hasDatabase } from "@/db";
 import { leads } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +13,11 @@ export async function POST(req: Request) {
     if (!name || !/^\S+@\S+\.\S+$/.test(email)) {
       return Response.json({ ok: false, error: "Please provide a valid name and email." }, { status: 400 });
     }
-    await db.insert(leads).values({ name, email, interest, message });
+    if (!hasDatabase()) {
+      console.warn("[leads] DATABASE_URL not set — lead not persisted:", { name, email, interest });
+      return Response.json({ ok: true, persisted: false });
+    }
+    await getDb().insert(leads).values({ name, email, interest, message });
     return Response.json({ ok: true });
   } catch {
     return Response.json({ ok: false, error: "Unable to submit right now." }, { status: 500 });

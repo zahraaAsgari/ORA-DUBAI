@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,79771,t=>{"use strict";t.s(["scrollState",0,{progress:0,velocity:0}])},70710,t=>{t.v(s=>Promise.all(["static/chunks/0aa0peujj__g..js"].map(s=>t.l(s))).then(()=>s(33480)))}]);
